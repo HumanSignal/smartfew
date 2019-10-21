@@ -2,7 +2,12 @@
 
 SmartFew is your swiss knife for semi-supervised structuring of unlabeled data. 
 
-How it works:
+#### Install
+```bash
+pip3 install -e .
+```
+
+#### How it works:
 
 1. Prepare the file with image URLs _image_urls.txt_, e.g.
     ```text

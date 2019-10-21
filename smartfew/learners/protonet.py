@@ -5,10 +5,13 @@ import torch.nn as nn
 import numpy as np
 
 from tqdm import tqdm
-
-from torch.utils.tensorboard import SummaryWriter
-
 from smartfew.utils.io import get_data_dir
+
+use_tensorboard = True
+try:
+    from torch.utils.tensorboard import SummaryWriter
+except ImportError:
+    use_tensorboard = False
 
 
 _PROTONET_CHECKPOINT = 'protonet.pt'
@@ -133,7 +136,7 @@ def train_model(
     classes = torch.from_numpy(classes).float()
 
     loss = nn.CrossEntropyLoss()
-    writer = SummaryWriter()
+    writer = SummaryWriter() if use_tensorboard else None
     for i in tqdm(range(num_episodes)):
         optim.zero_grad()
         logits, labels = model(
@@ -141,7 +144,8 @@ def train_model(
             num_classes_per_episode, num_support_per_class, num_query_per_class
         )
         loss_value = loss(logits, labels)
-        writer.add_scalar('Loss', loss_value.item(), i)
+        if use_tensorboard:
+            writer.add_scalar('Loss', loss_value.item(), i)
         loss_value.backward()
         optim.step()
 
