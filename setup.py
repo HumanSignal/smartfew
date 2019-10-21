@@ -10,6 +10,8 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'Flask==1.1.1'
+        'Flask==1.1.1',
+        'torch==1.3.0',
+        'torchvision==0.4.1'
     ],
 )

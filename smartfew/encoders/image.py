@@ -7,8 +7,9 @@ import torch
 
 from torch import nn
 from torchvision import models, transforms
-from appdirs import user_cache_dir
 from PIL import Image
+
+from smartfew.utils.io import get_cache_dir
 
 
 logger = logging.getLogger(__name__)
@@ -19,8 +20,7 @@ class ImageEncoder(object):
     def __init__(self, for_train=True, model_name='resnet50', cache_dir=None):
         self.for_train = for_train
         self.model_name = model_name
-        self.cache_dir = cache_dir if cache_dir is not None else user_cache_dir(__name__)
-        os.makedirs(self.cache_dir, exist_ok=True)
+        self.cache_dir = cache_dir if cache_dir is not None else get_cache_dir()
 
         self._preprocessing = self._get_preprocessing(for_train)
         self._encoder = None
@@ -79,6 +79,8 @@ class ImageEncoder(object):
             except Exception as exc:
                 logger.error(f'Failed downloading {url} to {filepath}. Reason: {exc}', exc_info=True)
                 return
+            else:
+                logger.debug(f'Image loaded from {url} to {filepath}')
         return self._load_from_file(filepath)
 
     def encode(self, items, is_urls=True):

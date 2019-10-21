@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartFew</title>
+
+</head>
+<body>
+    <div id="root"></div>
+    <!-- CSS -->
+    {% for css in css_includes %}
+        <link href="{{ css }}" rel="stylesheet">
+    {% endfor %}
+
+    <!-- JS -->
+    {% for js in js_includes %}
+        <script src="{{ js }}"></script>
+    {% endfor %}
+</body>
+</html>

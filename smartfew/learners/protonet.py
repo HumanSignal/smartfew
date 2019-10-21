@@ -5,8 +5,11 @@ import torch.nn as nn
 import numpy as np
 
 from tqdm import tqdm
-from appdirs import user_data_dir
+
 from torch.utils.tensorboard import SummaryWriter
+
+from smartfew.utils.io import get_data_dir
+
 
 _PROTONET_CHECKPOINT = 'protonet.pt'
 
@@ -147,7 +150,7 @@ def train_model(
 
 def load_model(checkpoint_dir=None):
     if checkpoint_dir is None:
-        checkpoint_dir = user_data_dir(__name__)
+        checkpoint_dir = get_data_dir()
     checkpoint_file = os.path.join(checkpoint_dir, _PROTONET_CHECKPOINT)
     if not os.path.exists(checkpoint_file):
         logger.warning(f'Can\'t load model state from checkpoint {checkpoint_file}: file doesn\'t exist')
@@ -174,8 +177,7 @@ def apply_model(samples, model, classes=None):
 
 def save_checkpoint(model, optimizer, checkpoint_dir=None):
     if checkpoint_dir is None:
-        checkpoint_dir = user_data_dir(__name__)
-    os.makedirs(checkpoint_dir, exist_ok=True)
+        checkpoint_dir = get_data_dir()
 
     checkpoint = {
         'input_dim': model.input_dim,
@@ -190,7 +192,7 @@ def save_checkpoint(model, optimizer, checkpoint_dir=None):
 
 def load_checkpoint(model, optimizer, checkpoint_dir=None, for_inference=False):
     if checkpoint_dir is None:
-        checkpoint_dir = user_data_dir(__name__)
+        checkpoint_dir = get_data_dir()
 
     checkpoint_file = os.path.join(checkpoint_dir, _PROTONET_CHECKPOINT)
     if not os.path.exists(checkpoint_file):
