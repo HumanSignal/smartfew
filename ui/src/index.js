@@ -85,11 +85,13 @@ const imageItems = ImageItems.create({
 
 class App extends React.Component {
     render() {
+        let numImages = this.props.imageItems.length;
+        let buttonName = numImages > 0 ? "Submit" : "Start";
         return (
             <div>
                 <ImageItemsView items={this.props.imageItems}/>
                 <div align="center">
-                    <Button type="primary" size="large" onClick={this.props.imageItems.loadImages}>Submit</Button>
+                    <Button type="primary" size="large" onClick={this.props.imageItems.loadImages}>{buttonName}</Button>
                 </div>
             </div>
         )
