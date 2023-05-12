@@ -14,7 +14,7 @@ setup(
         'requests==2.22.0',
         'appdirs==1.4.3',
         'tqdm==4.36.1',
-        'torch==1.3.0',
+        'torch==1.13.1',
         'torchvision==0.4.1',
     ],
 )
