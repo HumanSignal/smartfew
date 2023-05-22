@@ -11,7 +11,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'Flask==1.1.1',
-        'requests==2.22.0',
+        'requests==2.31.0',
         'appdirs==1.4.3',
         'tqdm==4.36.1',
         'torch==1.13.1',
